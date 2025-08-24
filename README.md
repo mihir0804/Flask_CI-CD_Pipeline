@@ -15,10 +15,6 @@ Automated CI/CD pipeline with GitHub Actions
 
 Deployment to cloud (Heroku or Render)
 
-Project Structure
-css
-Copy
-Edit
 flask-ci-cd-project/
 │── app/
 │   ├── __init__.py
@@ -36,6 +32,7 @@ flask-ci-cd-project/
 │   └── workflows/
 │       └── ci-cd.yml
 │── README.md
+
 Tech Stack
 Programming Language: Python 3.10
 
