@@ -1,105 +1,82 @@
-# Flask CI/CD Pipeline
+# CI/CD Pipeline for Flask API with Docker & GitHub Actions
 
-## Overview
-This project demonstrates a complete **CI/CD pipeline for a Python-based Flask REST API**.  
-The pipeline automates code testing, linting, containerization with Docker, and deployment through GitHub Actions.  
-It serves as a practical example of how modern development teams streamline software delivery using CI/CD practices.
-
----
-
-## Features
-- REST API built with **Flask**  
-- Unit testing with **pytest**  
-- Code linting with **flake8**  
-- Containerized using **Docker**  
-- Automated CI/CD pipeline with **GitHub Actions**  
-- Deployment to cloud platforms (Heroku or Render)  
-
----
+This project is a simple Flask REST API with an automated CI/CD pipeline using GitHub Actions, Docker, and pytest.
 
 ## Project Structure
 
+```
 flask-ci-cd-project/
 │── app/
-│ ├── init.py
-│ ├── main.py
-│ ├── routes.py
+│   ├── __init__.py
+│   ├── main.py           # Flask API
+│   └── routes.py         # API routes
 │
 │── tests/
-│ ├── test_routes.py
+│   └── test_routes.py    # pytest unit tests
 │
-│── requirements.txt
-│── Dockerfile
-│── docker-compose.yml
-│── .flake8
+│── requirements.txt      # dependencies
+│── Dockerfile            # Docker container setup
+│── .flake8               # linting config
 │── .github/
-│ └── workflows/
-│ └── ci-cd.yml
-│── README.md
+│   └── workflows/
+│       └── ci-cd.yml     # GitHub Actions pipeline
+└── README.md             # documentation
+```
 
-
----
-
-## Tech Stack
-- **Programming Language:** Python 3.10  
-- **Framework:** Flask  
-- **Testing:** Pytest  
-- **Linting:** Flake8  
-- **CI/CD Tool:** GitHub Actions  
-- **Containerization:** Docker  
-- **Deployment:** Heroku / Render  
-
----
-
-## CI/CD Workflow
-1. **Code Quality Check** – Flake8 runs on every push to ensure code follows PEP8 standards.  
-2. **Automated Testing** – Pytest runs unit tests to validate API functionality.  
-3. **Docker Build** – Application is containerized with Docker.  
-4. **Docker Push** – Docker image is pushed to DockerHub.  
-5. **Deployment** – Application is deployed to Heroku/Render automatically after tests pass.  
-
----
-
-## How to Run Locally
+## Getting Started
 
 ### Prerequisites
-- Python 3.10+  
-- Docker (optional, for containerized execution)  
 
-### Steps
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/flask-ci-cd-pipeline.git
-   cd flask-ci-cd-pipeline
+*   Python 3.9+
+*   Docker
 
-python -m venv venv
-source venv/bin/activate   # For Linux/Mac
-venv\Scripts\activate      # For Windows
-pip install -r requirements.txt
+### Installation and Running Locally
 
-python app/main.py
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/<your-username>/flask-ci-cd-project.git
+    cd flask-ci-cd-project
+    ```
 
+2.  **Create a virtual environment and install dependencies:**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    pip install -r requirements.txt
+    ```
+
+3.  **Run the application:**
+    ```bash
+    gunicorn --bind 127.0.0.1:5000 "app.main:create_app()"
+    ```
+    The application will be available at `http://127.0.0.1:5000/hello`.
+
+### Running with Docker
+
+1.  **Build the Docker image:**
+    ```bash
+    docker build -t flask-api .
+    ```
+
+2.  **Run the Docker container:**
+    ```bash
+    docker run -p 5000:5000 flask-api
+    ```
+    The application will be available at `http://localhost:5000/hello`.
+
+## Testing
+
+To run the unit tests, use pytest:
+```bash
 pytest
+```
 
-docker build -t flask-ci-cd .
-docker run -p 5000:5000 flask-ci-cd
+## CI/CD Pipeline
 
-## **Deployment**
-### This project can be deployed to:
+The project uses GitHub Actions for CI/CD. The pipeline is defined in `.github/workflows/ci-cd.yml` and includes the following jobs:
 
-- Heroku: Using a Procfile and GitHub integration.
-- Render: Connect GitHub repo for auto-deployments.
-- AWS/GCP/Azure: Deploy Docker image using ECS, Cloud Run, or App Service.
+*   **Linting:** Checks the code for style issues using `flake8`.
+*   **Testing:** Runs the unit tests using `pytest`.
+*   **Docker Build:** Builds the Docker image for the application.
 
-# Use Case in Industry
-- Automating testing and deployment ensures code reliability.
-- Docker makes the application portable and scalable.
-- CI/CD with GitHub Actions reduces manual effort and speeds up release cycles.
-- Useful for web development, data engineering, and machine learning deployment scenarios.
-
-## **License**
-**This project is licensed under the MIT License.**
-
-yaml
-Copy
-Edit
+The pipeline is triggered on every push and pull request to the `main` branch.
